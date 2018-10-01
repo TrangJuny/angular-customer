@@ -1,6 +1,7 @@
-
-
-import { Component } from '@angular/core';
+// import {  ngf } from "angular-file"
+import { Component } from "@angular/core"
+import { HttpClient, HttpRequest, HttpResponse  } from '@angular/common/http'
+import { Subscription } from 'rxjs'
 
 @Component({
     selector: 'app-customer-detail-component',
@@ -10,80 +11,50 @@ import { Component } from '@angular/core';
 
 
 export class CustomerDetailComponent {
+  // ngf:ngf;
+ 
+  accept = '*'
+  files:File[] = []
+  progress:number
+  url = 'https://evening-anchorage-3159.herokuapp.com/api/'
+  hasBaseDropZoneOver:boolean = false
+  httpEmitter:Subscription
+  httpEvent:any
+  lastFileAt:Date
 
-  resetUpload1: boolean;
-  resetUpload2: boolean;
-  resetUpload3: boolean;
-  token: string = "lkdjlfjld";
-  afuConfig1 = {
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload"
+  sendableFormData:FormData//populated via ngfFormData directive
+
+  constructor(public HttpClient:HttpClient){}
+
+  cancel(){
+    this.progress = 0
+    if( this.httpEmitter ){
+      console.log('cancelled')
+      this.httpEmitter.unsubscribe()
     }
-  };
-
-  afuConfig2 = {
-    theme: "attachPin",
-    hideProgressBar: "true",
-    hideResetBtn: "true",
-    maxSize: "1",
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    },
-    formatsAllowed: ".jpg,.png",
-    multiple: "true"
-  };
-  afuConfig3 = {
-    theme: "dragNDrop",
-    hideProgressBar: true,
-    hideResetBtn: true,
-    hideSelectBtn: true,
-    maxSize: "1",
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload"
-    },
-    formatsAllowed: ".jpg,.png",
-    multiple: true
-  };
-  /*
-  afuConfig2 = {
-    theme: "hjkhkh",
-    hideProgressBar: "true",
-    maxSize: "1",
-    uploadAPI: {
-      url: "https://evening-anchorage-3159.herokuapp.com/api",
-      headers: {
-       "Content-Type" : "text/plain;charset=UTF-8",
-       "Authorization" : `Bearer ${this.token}`
-      }
-    },
-    formatsAllowed: ".jpg,.png",
-    multiple: "false"
-  };
-  */
- // @ViewChild("afu1") private afuref1: AngularFileUploaderComponent;
- // @ViewChild("afu2") private afuref2: AngularFileUploaderComponent;
- // @ViewChild("afu3") private afuref3: AngularFileUploaderComponent;
-  constructor() { }
-
-  ngOnInit() {
-    /* Notification.requestPermission(function(params) {
-      var n = new Notification('HTML5 Notifications API', {
-        body: "It's working woohoooooooooooooo...!",
-        icon:'https://www.wikihow.com/images/4/4b/Right-Click-on-a-Mouse-That-Does-Not-Have-Right-Click-Step-5.jpg'
-      });
-    }) */
-  }
-  DocUpload(env) {
-    console.log(env);
   }
 
-  resetfu(id) {
-    //this.rfu.resetFileUpload(id);
-    //id == 1 ? this.afuref1.resetFileUpload() : this.afuref2.resetFileUpload();
-    this[`afuref${id}`].resetFileUpload();
-    //this.resetUpload1 = true;
+  uploadFiles(files:File[]):Subscription{
+    files
+    const req = new HttpRequest<FormData>('POST', this.url, this.sendableFormData, {
+      reportProgress: true//, responseType: 'text'
+    })
+    
+    return this.httpEmitter = this.HttpClient.request(req)
+    .subscribe(
+      event=>{
+        this.httpEvent = event
+        
+        if (event instanceof HttpResponse) {
+          delete this.httpEmitter
+          console.log('request done', event)
+        }
+      },
+      error=>console.log('Error Uploading',error)
+    )
+  }
+
+  getDate(){
+    return new Date()
   }
 }

@@ -71,3 +71,101 @@
 .form-check-label {
   margin-left: 1rem;
 }
+
+
+
+.update-file-drag-drop{
+  // border: 1px dashed #d7d7d7;
+  height: 22rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  .title{
+      // margin-top: 1.4rem;
+      color: #424142;
+  }
+
+  .icon{
+      font-size: 3.5rem;
+  }
+
+  .sub-text{
+      font-size: 10px;
+      color: #adadad;
+  }
+
+  .dragNDropBtmPad {
+      &>div{
+          position: static !important;
+      }
+  }
+  .afu-dragndrop-box {
+      border: 2px dashed #d7d7d7 !important;
+      position: absolute;
+      width: 100% !important;
+      height: 100% !important;
+      top:0;
+      left: 0;
+  }
+  .btn-sm.afu-select-btn {
+    border: none;
+    color: #333 !important;
+    overflow: hidden;
+    display: inline-block;
+    font: normal normal normal 14px/1 FontAwesome;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    height: auto;
+    padding: 0;
+    background: none !important;
+    margin: 0;
+    position: relative;
+    cursor: pointer;
+
+    &:before{
+      content: "\F067";
+      left: 0;
+      top: 0;
+      display: inline-block;
+      font-size: 33px;
+      width: 100%;
+    }
+  }
+
+  div#dragNDrop {
+      text-align: center;
+      padding: 0;
+  }
+
+
+  p.afu-dragndrop-text {
+      display: none;
+  }
+
+  p.constraints-info.afu-constraints-info {
+      display: none;
+  }
+
+  button.btn.btn-success.afu-upload-btn {
+      position: absolute;
+      // display: none;
+  }
+
+  .update-file-drag-drop * {
+      margin: 0;
+      padding: 0;
+  }
+
+  br.ng-star-inserted {
+      display: none;
+  }
+
+  br {
+      display: none;
+  }
+}

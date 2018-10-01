@@ -10,8 +10,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatTabsModule} from '@angular/material/tabs';
 
-import { AngularFileUploaderModule } from "angular-file-uploader";
 import { DndModule } from 'ngx-drag-drop';
+import { ngfModule } from "angular-file"
 
 import { CustomerColumnOptionsComponent } from './column-options-component/column-options.component';
 import { ColumnOptionsRowComponent } from './column-options-component/row/column-options-row.component';
@@ -34,8 +34,8 @@ import { CheckboxComponent } from '../shared/components/common-control/control-v
         NgbModule,
         ReactiveFormsModule,
         DndModule,
-        MatTabsModule,
-        AngularFileUploaderModule
+        MatTabsModule,   
+        ngfModule
     ],
     declarations: [
         CustomerComponent,
