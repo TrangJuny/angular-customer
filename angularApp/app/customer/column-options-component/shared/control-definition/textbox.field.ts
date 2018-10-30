@@ -1,6 +1,6 @@
 import { ControlBase } from './base.field';
 
-export class TextboxColumnOption extends ControlBase<string> {
+export class TextboxComponent extends ControlBase<string> {
   controlType = 'textbox';
   type: string;
 

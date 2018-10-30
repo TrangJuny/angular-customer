@@ -2,6 +2,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 // import { FormBuilder, FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { ColumnOptionsServices } from './shared/control-services/columnOptions.services';
 import { DropdownColumnOption } from './shared/control-definition/dropdown.field';
+import { CustomerServices } from '../shared/customer-services/customer.services';
 import { ControlBase } from './shared/control-definition/base.field';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DndDropEvent, DropEffect } from "ngx-drag-drop";
@@ -24,8 +25,8 @@ export class CustomerColumnOptionsComponent implements OnInit {
   form: FormGroup;
   formdata = '';
   // private columnsControl: ControlBase<any>[] = [];
-  private groupControl: any = {};
-  constructor(private services: ColumnOptionsServices) {
+  // private groupControl: any = {};
+  constructor(private services: ColumnOptionsServices,private CustomerServices: CustomerServices) {
     console.log(this.services);
   }
   public closePanel() {
@@ -39,7 +40,7 @@ export class CustomerColumnOptionsComponent implements OnInit {
       key: newKey,
       label: newName,
       options: this.allColumns,
-      required: true,
+      validations: [Validators.required],
       order: numberOfControl,
       value: this.allColumns[0]
     })
@@ -73,24 +74,14 @@ export class CustomerColumnOptionsComponent implements OnInit {
         key: 'column' + i.toString(),
         label: 'column name ' + i.toString(),
         options: Object.assign([], this.allColumns),
-        required: true,
+        validations: [Validators.required],
         // order: i,
         value: this.activeColumns[i]
       });
       arrayControls.push(control)
     }
     return arrayControls.sort((a, b) => a.order - b.order);
-  }
-
-  public toFormGroup(columns: ControlBase<any>[]) {
-    columns.forEach(column => {
-      this.groupControl[column.key] = column.required ?
-        new FormControl(column.value || '', Validators.required)
-        : new FormControl(column.value || '');
-    });
-    console.log(this.groupControl);
-    return new FormGroup(this.groupControl);
-  }
+  }  
 
   public revert() {
     this.form.reset();
@@ -100,12 +91,12 @@ export class CustomerColumnOptionsComponent implements OnInit {
     }
     this.activeColumns = Object.assign([], this.columnActiveBase);
     this.columnMetadata = this.initColumns();
-    this.form = this.toFormGroup(this.columnMetadata);
+    this.form = this.CustomerServices.toFormGroup(this.columnMetadata);
   }
   public ngOnInit() {
     this.columnActiveBase = Object.assign([], this.activeColumns);
     this.columnMetadata = this.initColumns();
-    this.form = this.toFormGroup(this.columnMetadata);
+    this.form = this.CustomerServices.toFormGroup(this.columnMetadata);
   }
   public onSubmit() {
     // this.formdata = JSON.stringify(this.form.value);

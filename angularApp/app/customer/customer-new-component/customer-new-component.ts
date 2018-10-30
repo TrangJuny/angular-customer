@@ -1,8 +1,8 @@
 import { Component, OnInit} from '@angular/core';
 import { CustomerServices } from '../shared/customer-services/customer.services';
 import { Customer } from "../shared/customer-models/customer.model";
-import { FormGroup,FormBuilder, Validators }  from '@angular/forms';
-import { TextboxColumnOption }  from '../../shared/components/common-control/control-definition/textbox.field';
+import { FormGroup,Validators }  from '@angular/forms';
+import { TextboxComponent, TextareaComponent }  from '../../shared/components/common-control/control-definition/textbox.field';
 
 
 @Component({
@@ -18,89 +18,69 @@ export class NewCustomerComponent implements OnInit {
   formPayInformation: FormGroup;
   formCustomerInformation:FormGroup;
   payLoad = '';
-  constructor(private qcs: CustomerServices,private fb: FormBuilder) {  }
-  get f() { return this.formCustomer.controls; }
+  constructor(private CustomerServices: CustomerServices) {  }  
 
-  formCustomer = this.fb.group({
-    CompanyName: ['',  Validators.compose([Validators.required])],
-    CompanyPresident: [''],
-    IsHeadQuarter: [''],
-    CompanyWebsite: [''],
-    Email: ['',  Validators.compose([Validators.pattern('/^[a-z]+[a-z0-9._]+@[a-z]+\.[a-z.]{2,5}$/')])],
-    Description: [''],
-    addressContact: this.fb.group({
-      Address1: [''],
-      Address2: [''],
-      Country: [''],
-      StateOrProvince: [''],
-      ZipCode: [''],
-      PhoneNumber: [''],
-      FaxNumber: [''],
-    })
-  });
   getCustomerInformation() {
 
     let controls: any[] = [      
 
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'CompanyName',
         label: 'Company name',
         value: null,
-        required: true,
+        validations: [Validators.required],
         order: 1
       }),
 
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'CompanyPresident',
         label: 'Company President',
         value: null,
-        required: true,
         order: 2
       }),
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'BankAddress',
         label: 'Bank Address',
         value: null,
-        required: true,
         order: 2
       }),
 
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'IsHeadQuarter',
         label: 'HeadQuarter',
         value: null,
         order: 3
       }),
 
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'CompanyWebsite',
         label: 'CompanyWebsite',
         value: null,
         order: 3
       }),
 
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'Email',
         label: 'Email',
         value: null,
         order: 3
       }),
 
-      new TextboxColumnOption({
+      new TextareaComponent({
         key: 'Description',
         label: 'Description',
         value: null,
         order: 3
       }),
       
-      new TextboxColumnOption({
+      new TextboxComponent({
         key: 'addressContact',
         label: 'Address & Contact',
         value: null,
         order: 3,
         parent:true,
         children:[          
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'Address1',
             label: 'Address 1',
             value: null,
@@ -108,7 +88,7 @@ export class NewCustomerComponent implements OnInit {
             className:'col-4',
           }),        
 
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'Address2',
             label: 'Address 2',
             value: null,
@@ -116,35 +96,35 @@ export class NewCustomerComponent implements OnInit {
             className:'col-4',
           }),   
 
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'Country',
             label: 'Country',
             value: null,
             order: 3,
             className:'col-4',
           }),
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'StateOrProvince',
             label: 'State/Province',
             value: null,
             order: 3,
             className:'col-4',
           }),
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'ZipCode',
             label: 'Zip/ Postal Code',
             value: null,
             order: 3,
             className:'col-4',
           }),
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'PhoneNumber',
             label: 'Phone Number',
             value: null,
             order: 3,
             className:'col-4',
           }),
-          new TextboxColumnOption({
+          new TextboxComponent({
             key: 'FaxNumber',
             label: 'Fax Number',
             value: null,
@@ -161,10 +141,86 @@ export class NewCustomerComponent implements OnInit {
   }
 
 
+  
+  getPayInformation() {
+
+    let controls: any[] = [      
+
+      new TextboxComponent({
+        key: 'PaymentMethod',
+        label: 'Preferred payment me',
+        value: null,
+        validations: [Validators.required],
+        order: 1
+      }),
+
+      new TextboxComponent({
+        key: 'BankName',
+        label: 'Bank Name',
+        value: null,
+        validations: [Validators.required],
+        order: 2
+      }),
+      new TextboxComponent({
+        key: 'BankAddress',
+        label: 'Bank Address',
+        value: null,
+        validations: [Validators.required],
+        order: 2
+      }),
+
+      new TextboxComponent({
+        key: 'AccountName',
+        label: 'Account Name',
+        value: null,
+        order: 3
+      }),
+
+      new TextboxComponent({
+        key: 'AccountAddress',
+        label: 'Account Address',
+        value: null,
+        order: 3
+      }),
+
+      new TextboxComponent({
+        key: 'IbanNumber',
+        label: 'IBAN number',
+        value: null,
+        order: 3
+      }),
+
+      new TextboxComponent({
+        key: 'AccountCurrencyId',
+        label: 'Account Currency',
+        value: null,
+        order: 3
+      }),
+      new TextboxComponent({
+        key: 'SwiftCode',
+        label: 'BIC/SWIFT code',
+        value: null,
+        order: 3
+      }),
+      new TextboxComponent({
+        key: 'PaymentConditions',
+        label: 'Payment Conditions',
+        value: null,
+        order: 3
+      }),
+
+    ];
+
+    return controls.sort((a, b) => a.order - b.order);
+  }
+
+  controlsPayInformation = this.getPayInformation();
+  controlsCustomerInformation = this.getCustomerInformation();
+
 
   onSubmitCustomer(){}
   onSubmit() {
-    // this.qcs.
+    // this.CustomerServices.
     // this.formPayInformation['submit']=true;
     //tabGroup.selectedIndex=1;
     
@@ -235,128 +291,15 @@ export class NewCustomerComponent implements OnInit {
       }
     }
 
-    this.qcs.addNewCustomer(newCustomer).then(
+    this.CustomerServices.addNewCustomer(newCustomer).then(
       result=>{console.log(result)}
     );
 
 
   }
   
-  
-  getPayInformation() {
-
-    let controls: any[] = [      
-
-      new TextboxColumnOption({
-        key: 'PaymentMethod',
-        label: 'Preferred payment me',
-        value: null,
-        required: true,
-        order: 1
-      }),
-
-      new TextboxColumnOption({
-        key: 'BankName',
-        label: 'Bank Name',
-        value: null,
-        required: true,
-        order: 2
-      }),
-      new TextboxColumnOption({
-        key: 'BankAddress',
-        label: 'Bank Address',
-        value: null,
-        required: true,
-        order: 2
-      }),
-
-      new TextboxColumnOption({
-        key: 'AccountName',
-        label: 'Account Name',
-        value: null,
-        order: 3
-      }),
-
-      new TextboxColumnOption({
-        key: 'AccountAddress',
-        label: 'Account Address',
-        value: null,
-        order: 3
-      }),
-
-      new TextboxColumnOption({
-        key: 'IbanNumber',
-        label: 'IBAN number',
-        value: null,
-        order: 3
-      }),
-
-      new TextboxColumnOption({
-        key: 'AccountCurrencyId',
-        label: 'Account Currency',
-        value: null,
-        order: 3
-      }),
-      new TextboxColumnOption({
-        key: 'SwiftCode',
-        label: 'BIC/SWIFT code',
-        value: null,
-        order: 3
-      }),
-      new TextboxColumnOption({
-        key: 'PaymentConditions',
-        label: 'Payment Conditions',
-        value: null,
-        order: 3
-      }),
-
-    ];
-
-    return controls.sort((a, b) => a.order - b.order);
-  }
-
-  controlsPayInformation = this.getPayInformation();
-  controlsCustomerInformation = this.getCustomerInformation();
-
   ngOnInit() {
-    this.formCustomerInformation = this.qcs.toFormGroup(this.controlsCustomerInformation);
-    this.formPayInformation = this.qcs.toFormGroup(this.controlsPayInformation);
+    this.formCustomerInformation = this.CustomerServices.toFormGroup(this.controlsCustomerInformation);
+    this.formPayInformation = this.CustomerServices.toFormGroup(this.controlsPayInformation);
   }
-  resetUpload1: boolean;
-  resetUpload2: boolean;
-  resetUpload3: boolean;
-  token: string = "lkdjlfjld";
-  afuConfig1 = {
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload"
-    }
-  };
-
-  afuConfig2 = {
-    theme: "attachPin",
-    hideProgressBar: "true",
-    hideResetBtn: "true",
-    maxSize: "1",
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload",
-      headers: {
-        "Content-Type": "multipart/form-data"
-      }
-    },
-    formatsAllowed: ".jpg,.png",
-    multiple: "true"
-  };
-  afuConfig3 = {
-    theme: "dragNDrop",
-    hideProgressBar: true,
-    hideResetBtn: true,
-    hideSelectBtn: true,
-    maxSize: "1",
-    uploadAPI: {
-      url: "https://slack.com/api/files.upload"
-    },
-    formatsAllowed: ".jpg,.png",
-    multiple: true
-  };
-  
 }

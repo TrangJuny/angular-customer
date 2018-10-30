@@ -19,6 +19,7 @@ import { NewCustomerComponent } from './customer-new-component/customer-new-comp
 import { AppControlComponent } from '../shared/components/common-control/control-view/control.component';
 import { ErrorvalidateComponent } from '../shared/components/common-control/error-validate/error-validate-component';
 import { RadioComponent } from '../shared/components/common-control/control-view/radio';
+import { TextareaComponent } from '../shared/components/common-control/control-view/textarea';
 import { InputComponent } from '../shared/components/common-control/control-view/input';
 import {DropDownComponent} from '../shared/components/common-control/control-view/dropdown';
 import { CheckboxComponent } from '../shared/components/common-control/control-view/checkbox';
@@ -47,6 +48,7 @@ import { CheckboxComponent } from '../shared/components/common-control/control-v
         ErrorvalidateComponent,
         DropDownComponent,
         InputComponent,
+        TextareaComponent,
         CheckboxComponent,
         RadioComponent
     ],
