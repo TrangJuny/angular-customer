@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http, RequestOptions } from '@angular/http';
 import { Configuration } from '../../../app.constants';
 
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { ControlBase } from '../../../shared/components/common-control/control-definition/base.field';
 //'../../../shared/components/control-definition/base.field
 
@@ -64,8 +64,8 @@ export class CustomerServices implements ICustomerServices {
 
   controls.forEach(control => {
     if (!control.parent) {
-      group[control.key] = control.required ? new FormControl(control.value || '', Validators.required)
-        : new FormControl(control.value || '');
+      let validatetions= control.validations.concat([Validators.maxLength(100)])
+      group[control.key] = new FormControl(control.value || '', validatetions);
     }
     else {
       group[control.key] = this.toFormGroup(control.children);

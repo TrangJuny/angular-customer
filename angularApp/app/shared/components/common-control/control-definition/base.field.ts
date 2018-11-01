@@ -5,6 +5,7 @@ export class ControlBase<T> {
   validations: Array<T>;
   order: number;
   controlType: string;
+  required:boolean;
   parent: boolean;
   children: any[];
   className: string;
@@ -12,6 +13,7 @@ export class ControlBase<T> {
     value?: T,
     key?: string,
     label?: string,
+    required?: boolean,
     validations?: Array<T>,
     order?: number,
     controlType?: string,
@@ -26,6 +28,7 @@ export class ControlBase<T> {
     this.order = options.order === undefined ? 1 : options.order;
     this.controlType = options.controlType || '';
     this.parent= !!options.parent;
+    this.required= !!options.required;
     this.children= options.children;
     this.className=options.className;
   }

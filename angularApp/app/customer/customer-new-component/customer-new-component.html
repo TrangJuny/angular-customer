@@ -17,7 +17,26 @@
                             <span class="title">Update Loge</span>
                             <p class="sub-text">300x300px & *.PNG Recommended</p>
                         </div>
-
+                        <div [formGroup]="form">                         
+                            <kendo-upload
+                                [autoUpload]="true"
+                                [saveUrl]="uploadSaveUrl"
+                                [removeUrl]="uploadRemoveUrl"
+                                [restrictions]="uploadRestrictions"
+                                (select)="selectEventHandler($event)"
+                                (clear)="clearEventHandler($event)"
+                                (complete)="completeEventHandler($event)">
+                            </kendo-upload>
+                    
+                         <!-- <event-log title="Event log" [events]="events"></event-log> -->
+                    
+                          <div *ngIf="imagePreviews.length" class="img-preview example-config">
+                            <img *ngFor="let image of imagePreviews"
+                              [src]="image.src"
+                              alt="image preview"
+                              style="width: 200px; margin: 10px;" />
+                          </div>
+                      </div> 
                     </div>
                     <div class="col-8">          
                             
@@ -36,7 +55,7 @@
                             </div>
                             <div class="action-container right">
                                 <button class="btn btn-default" type="reset">Cancel</button> 
-                                <button class="btn btn-primary" [disabled]="!formCustomer.valid" (click)="this.tabGroup.selectedIndex=1">Next</button>
+                                <button class="btn btn-primary" [disabled]="!formCustomerInformation.valid" (click)="this.tabGroup.selectedIndex=1">Next</button>
                             </div>
     
                            

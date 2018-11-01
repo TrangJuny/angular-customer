@@ -28,6 +28,7 @@ export class ErrorvalidateComponent implements OnInit {
             "minlength":`Minleingth : ${value.requiredLength} character`,
             "maxlength": `Maxleingth : ${value.requiredLength} character`,
             "pattern": `Not valid ${value.requiredLength}!`,
+            "email": `Email must be a valid email address`,
         }
         return mes[err];
     }

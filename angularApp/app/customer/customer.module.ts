@@ -23,6 +23,8 @@ import { TextareaComponent } from '../shared/components/common-control/control-v
 import { InputComponent } from '../shared/components/common-control/control-view/input';
 import {DropDownComponent} from '../shared/components/common-control/control-view/dropdown';
 import { CheckboxComponent } from '../shared/components/common-control/control-view/checkbox';
+// import { FileComponent }  from '../shared/components/common-control/control-view/file';
+import { UploadModule } from '@progress/kendo-angular-upload';
 
 
 @NgModule({
@@ -36,7 +38,8 @@ import { CheckboxComponent } from '../shared/components/common-control/control-v
         ReactiveFormsModule,
         DndModule,
         MatTabsModule,   
-        ngfModule
+        ngfModule,
+        UploadModule
     ],
     declarations: [
         CustomerComponent,
@@ -50,7 +53,7 @@ import { CheckboxComponent } from '../shared/components/common-control/control-v
         InputComponent,
         TextareaComponent,
         CheckboxComponent,
-        RadioComponent
+        RadioComponent,
     ],
 })
 

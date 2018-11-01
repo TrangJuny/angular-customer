@@ -3,6 +3,8 @@ import { CustomerServices } from '../shared/customer-services/customer.services'
 import { Customer } from "../shared/customer-models/customer.model";
 import { FormGroup,Validators }  from '@angular/forms';
 import { TextboxComponent, TextareaComponent }  from '../../shared/components/common-control/control-definition/textbox.field';
+import { FileRestrictions, SelectEvent, ClearEvent, RemoveEvent, FileInfo } from '@progress/kendo-angular-upload';
+
 
 
 @Component({
@@ -28,19 +30,22 @@ export class NewCustomerComponent implements OnInit {
         key: 'CompanyName',
         label: 'Company name',
         value: null,
-        validations: [Validators.required],
+        required:true,
+        validations: [Validators.required,Validators.maxLength(100)],
         order: 1
       }),
 
       new TextboxComponent({
         key: 'CompanyPresident',
         label: 'Company President',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 2
       }),
       new TextboxComponent({
         key: 'BankAddress',
         label: 'Bank Address',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 2
       }),
@@ -48,6 +53,7 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'IsHeadQuarter',
         label: 'HeadQuarter',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -55,20 +61,23 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'CompanyWebsite',
         label: 'CompanyWebsite',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
 
       new TextboxComponent({
         key: 'Email',
-        label: 'Email',
+        label: 'Emails',
         value: null,
+        validations: [Validators.email,Validators.maxLength(100)],
         order: 3
       }),
 
       new TextareaComponent({
         key: 'Description',
         label: 'Description',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -84,6 +93,7 @@ export class NewCustomerComponent implements OnInit {
             key: 'Address1',
             label: 'Address 1',
             value: null,
+            validations: [Validators.maxLength(100)],
             order: 3,
             className:'col-4',
           }),        
@@ -92,6 +102,7 @@ export class NewCustomerComponent implements OnInit {
             key: 'Address2',
             label: 'Address 2',
             value: null,
+            validations: [Validators.maxLength(100)],
             order: 3,
             className:'col-4',
           }),   
@@ -100,32 +111,38 @@ export class NewCustomerComponent implements OnInit {
             key: 'Country',
             label: 'Country',
             value: null,
+            validations: [Validators.maxLength(100)],
             order: 3,
             className:'col-4',
           }),
           new TextboxComponent({
             key: 'StateOrProvince',
             label: 'State/Province',
+            validations: [Validators.maxLength(100)],
             value: null,
             order: 3,
+            type:'number',
             className:'col-4',
           }),
           new TextboxComponent({
             key: 'ZipCode',
             label: 'Zip/ Postal Code',
             value: null,
+            validations: [Validators.maxLength(100)],
             order: 3,
             className:'col-4',
           }),
           new TextboxComponent({
             key: 'PhoneNumber',
             label: 'Phone Number',
+            validations: [Validators.maxLength(100)],
             value: null,
             order: 3,
             className:'col-4',
           }),
           new TextboxComponent({
             key: 'FaxNumber',
+            validations: [Validators.maxLength(100)],
             label: 'Fax Number',
             value: null,
             order: 3,
@@ -150,7 +167,8 @@ export class NewCustomerComponent implements OnInit {
         key: 'PaymentMethod',
         label: 'Preferred payment me',
         value: null,
-        validations: [Validators.required],
+        required:true,
+        validations: [Validators.required,Validators.maxLength(100)],
         order: 1
       }),
 
@@ -158,20 +176,23 @@ export class NewCustomerComponent implements OnInit {
         key: 'BankName',
         label: 'Bank Name',
         value: null,
-        validations: [Validators.required],
+        required:true,
+        validations: [Validators.required,Validators.maxLength(100)],
         order: 2
       }),
       new TextboxComponent({
         key: 'BankAddress',
         label: 'Bank Address',
         value: null,
-        validations: [Validators.required],
+        required:true,
+        validations: [Validators.required,Validators.maxLength(100)],
         order: 2
       }),
 
       new TextboxComponent({
         key: 'AccountName',
         label: 'Account Name',
+        validations: [Validators.required,Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -179,6 +200,7 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'AccountAddress',
         label: 'Account Address',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -186,6 +208,7 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'IbanNumber',
         label: 'IBAN number',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -193,18 +216,21 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'AccountCurrencyId',
         label: 'Account Currency',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
       new TextboxComponent({
         key: 'SwiftCode',
         label: 'BIC/SWIFT code',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
       new TextboxComponent({
         key: 'PaymentConditions',
         label: 'Payment Conditions',
+        validations: [Validators.maxLength(100)],
         value: null,
         order: 3
       }),
@@ -297,7 +323,61 @@ export class NewCustomerComponent implements OnInit {
 
 
   }
-  
+  public events: string[] = [];
+  public imagePreviews: FileInfo[] = [];
+  public uploadRestrictions: FileRestrictions = {
+    allowedExtensions: ['.jpg', '.png']
+  };
+
+  public uploadSaveUrl = 'saveUrl'; // should represent an actual API endpoint
+  public uploadRemoveUrl = 'removeUrl'; // should represent an actual API endpoint
+
+  public clearEventHandler(e: ClearEvent): void {
+    this.log('Clearing the file upload');
+    this.imagePreviews = [];
+  }
+
+  public completeEventHandler() {
+    this.log(`All files processed`);
+  }
+
+  public removeEventHandler(e: RemoveEvent): void {
+    this.log(`Removing ${e.files[0].name}`);
+
+    const index = this.imagePreviews.findIndex(item => item.uid === e.files[0].uid);
+
+    if (index >= 0) {
+      this.imagePreviews.splice(index, 1);
+    }
+  }
+
+  public selectEventHandler(e: SelectEvent): void {
+    const that = this;
+
+    e.files.forEach((file) => {
+      that.log(`File selected: ${file.name}`);
+
+      if (!file.validationErrors) {
+        const reader = new FileReader();
+
+        reader.onload = function (ev) {
+          let a:any=ev.target;
+          const image:any = {
+            src: a.result,
+            uid: file.uid
+          };
+
+          that.imagePreviews.unshift(image);
+        };
+
+        reader.readAsDataURL(file.rawFile);
+      }
+    });
+  }
+
+  private log(event: string): void {
+    this.events.unshift(`${event}`);
+  }
   ngOnInit() {
     this.formCustomerInformation = this.CustomerServices.toFormGroup(this.controlsCustomerInformation);
     this.formPayInformation = this.CustomerServices.toFormGroup(this.controlsPayInformation);
