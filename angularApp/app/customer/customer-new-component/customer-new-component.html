@@ -13,29 +13,29 @@
                 <div class="row">
                     <div class="col-4">
                         <div class="update-img">
-                            <div class="fa fa-plus icon"></div>
-                            <span class="title">Update Loge</span>
-                            <p class="sub-text">300x300px & *.PNG Recommended</p>
-                        </div>
-                        <div [formGroup]="form">                         
-                            <kendo-upload
-                                [autoUpload]="true"
-                                [saveUrl]="uploadSaveUrl"
-                                [removeUrl]="uploadRemoveUrl"
-                                [restrictions]="uploadRestrictions"
-                                (select)="selectEventHandler($event)"
-                                (clear)="clearEventHandler($event)"
-                                (complete)="completeEventHandler($event)">
-                            </kendo-upload>
-                    
-                         <!-- <event-log title="Event log" [events]="events"></event-log> -->
-                    
-                          <div *ngIf="imagePreviews.length" class="img-preview example-config">
-                            <img *ngFor="let image of imagePreviews"
-                              [src]="image.src"
-                              alt="image preview"
-                              style="width: 200px; margin: 10px;" />
-                          </div>
+                            <div [formGroup]="form">                         
+                                <kendo-upload
+                                    [autoUpload]="true"
+                                    [saveUrl]="uploadSaveUrl"
+                                    [removeUrl]="uploadRemoveUrl"
+                                    [restrictions]="uploadRestrictions"
+                                    (select)="selectEventHandler($event)"
+                                    (clear)="clearEventHandler($event)"
+                                    (complete)="completeEventHandler($event)">
+                                </kendo-upload>    
+                            </div>
+
+                            <div *ngIf="imagePreviews.length" class="img-preview example-config">
+                                <img *ngFor="let image of imagePreviews"
+                                [src]="image.src"
+                                alt="image preview" />
+                            </div>
+
+                            <div class="content-text">                                
+                                <div class="fa fa-plus icon"></div>
+                                <span class="title">Update Loge</span>
+                                <p class="sub-text">300x300px & *.PNG Recommended</p>
+                            </div>
                       </div> 
                     </div>
                     <div class="col-8">          
@@ -60,8 +60,8 @@
     
                            
                         </form>
-                        {{formCustomerInformation.valid}}
-                        {{ formCustomerInformation.value | json }}
+                        <!-- {{formCustomerInformation.valid}}
+                        {{ formCustomerInformation.value | json }} -->
                     </div>
                 </div>
             </ng-template>            

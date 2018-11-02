@@ -1,0 +1,72 @@
+
+
+
+ul.k-upload-files.k-reset.ng-star-inserted {
+    display: none;
+}
+
+.k-upload .k-dropzone .k-dropzone-hint {
+    display: none;
+}
+
+.k-upload .k-upload-button {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    margin: 0;
+    left: 0;
+    top: 0;
+    opacity: 0;
+}
+
+.k-upload .k-dropzone {
+    position: static;
+    display: block;
+}
+
+kendo-upload.k-widget.k-upload.k-header {
+    position: static;
+}
+
+.update-img {
+    position: relative;
+}
+
+.img-preview.example-config.ng-star-inserted {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.update-img[_ngcontent-c1] .sub-text[_ngcontent-c1],.update-img[_ngcontent-c1] .title[_ngcontent-c1] {
+    z-index: 1;
+}
+.content-text{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.img-preview+.content-text{
+    opacity: 0;    
+}
+
+kendo-upload-status-total.ng-star-inserted {
+    display: none;
+}
+.update-img:hover{
+    .img-preview{
+        background-color: #fff;
+        opacity: .07;
+
+        &+.content-text{
+            opacity: 1;
+            z-index: 1;
+        }
+    }
+}
