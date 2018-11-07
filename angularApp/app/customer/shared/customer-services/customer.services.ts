@@ -7,7 +7,7 @@ import { Configuration } from '../../../app.constants';
 
 import { FormControl, FormGroup,Validators } from '@angular/forms';
 import { ControlBase } from '../../../shared/components/common-control/control-definition/base.field';
-//'../../../shared/components/control-definition/base.field
+//'../../../shared/components/control-definition/base.field;
 
 @Injectable()
 export class CustomerServices implements ICustomerServices {
@@ -60,20 +60,20 @@ export class CustomerServices implements ICustomerServices {
     .catch(this.handleError);
 }
   public toFormGroup(controls: ControlBase < any > []) {
-  let group: any = {};
+    let group: any = {};
 
-  controls.forEach(control => {
-    if (!control.parent) {
-      let validatetions= control.validations.concat([Validators.maxLength(100)])
-      group[control.key] = new FormControl(control.value || '', validatetions);
-    }
-    else {
-      group[control.key] = this.toFormGroup(control.children);
-    }
-  });
+    controls.forEach(control => {
+      if (!control.parent) {
+        let validatetions= control.validations.concat([Validators.maxLength(100)])
+        group[control.key] = new FormControl(control.value || '', validatetions);
+      }
+      else {
+        group[control.key] = this.toFormGroup(control.children);
+      }
+    });
 
-  return new FormGroup(group);
-}
+    return new FormGroup(group);
+  }
 
 }
 

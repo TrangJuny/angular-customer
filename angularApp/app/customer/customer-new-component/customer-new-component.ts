@@ -1,8 +1,10 @@
 import { Component, OnInit} from '@angular/core';
 import { CustomerServices } from '../shared/customer-services/customer.services';
+import { RenderControl } from '../../shared/components/common-control/control-services/render-control';
 import { Customer } from "../shared/customer-models/customer.model";
 import { FormGroup,Validators }  from '@angular/forms';
 import { TextboxComponent, TextareaComponent }  from '../../shared/components/common-control/control-definition/textbox.field';
+import { CheckBoxComponent }  from '../../shared/components/common-control/control-definition/checkbox.field';
 import { FileRestrictions, SelectEvent, ClearEvent, RemoveEvent, FileInfo } from '@progress/kendo-angular-upload';
 
 
@@ -11,7 +13,7 @@ import { FileRestrictions, SelectEvent, ClearEvent, RemoveEvent, FileInfo } from
     selector: 'app-new-customer-component',
     templateUrl: './customer-new-component.html',
     styleUrls: ['./customer-new-component.scss'],
-    providers: [CustomerServices]
+    providers: [RenderControl]
    
 })
 
@@ -20,7 +22,7 @@ export class NewCustomerComponent implements OnInit {
   formPayInformation: FormGroup;
   formCustomerInformation:FormGroup;
   payLoad = '';
-  constructor(private CustomerServices: CustomerServices) {  }  
+  constructor(private RenderControl: RenderControl, private CustomerServices:CustomerServices ) {  }  
 
   getCustomerInformation() {
 
@@ -29,7 +31,7 @@ export class NewCustomerComponent implements OnInit {
       new TextboxComponent({
         key: 'CompanyName',
         label: 'Company name',
-        value: null,
+        value: true,
         required:true,
         validations: [Validators.required,Validators.maxLength(100)],
         order: 1
@@ -42,6 +44,16 @@ export class NewCustomerComponent implements OnInit {
         value: null,
         order: 2
       }),
+
+      new CheckBoxComponent({
+        key: 'HeadQuarter',
+        label: 'Head quarter',
+        validations: [],
+        value: false,
+        order: 2,
+        type:'checkbox'
+      }),
+
       new TextboxComponent({
         key: 'BankAddress',
         label: 'Bank Address',
@@ -246,7 +258,7 @@ export class NewCustomerComponent implements OnInit {
 
   onSubmitCustomer(){}
   onSubmit() {
-    // this.CustomerServices.
+    // this.RenderControl.
     // this.formPayInformation['submit']=true;
     //tabGroup.selectedIndex=1;
     
@@ -379,7 +391,7 @@ export class NewCustomerComponent implements OnInit {
     this.events.unshift(`${event}`);
   }
   ngOnInit() {
-    this.formCustomerInformation = this.CustomerServices.toFormGroup(this.controlsCustomerInformation);
-    this.formPayInformation = this.CustomerServices.toFormGroup(this.controlsPayInformation);
+    this.formCustomerInformation = this.RenderControl.toFormGroup(this.controlsCustomerInformation);
+    this.formPayInformation = this.RenderControl.toFormGroup(this.controlsPayInformation);
   }
 }

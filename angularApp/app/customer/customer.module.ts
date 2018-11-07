@@ -25,6 +25,7 @@ import {DropDownComponent} from '../shared/components/common-control/control-vie
 import { CheckboxComponent } from '../shared/components/common-control/control-view/checkbox';
 // import { FileComponent }  from '../shared/components/common-control/control-view/file';
 import { UploadModule } from '@progress/kendo-angular-upload';
+import {MatCheckboxModule} from '@angular/material/checkbox'
 
 
 @NgModule({
@@ -39,7 +40,8 @@ import { UploadModule } from '@progress/kendo-angular-upload';
         DndModule,
         MatTabsModule,   
         ngfModule,
-        UploadModule
+        UploadModule,
+        MatCheckboxModule
     ],
     declarations: [
         CustomerComponent,
